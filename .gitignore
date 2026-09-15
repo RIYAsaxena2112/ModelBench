@@ -1,0 +1,22 @@
+# secrets / env
+.env
+*.env.local
+**/secrets/
+
+# logs & trajectories (large, regenerable)
+logs/**
+storage/**
+!logs/agent/.gitkeep
+!logs/verifier/.gitkeep
+!storage/.gitkeep
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# node
+node_modules/
+
+# os
+.DS_Store
