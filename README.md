@@ -6,7 +6,9 @@ conditions, scored on correctness, quality, cost, and latency.
 This is a real, working build of the pilot design (see `docs/`), running entirely
 on free-tier infrastructure:
 
-- **Compute:** Oracle Cloud Always Free VM (Docker + Docker Compose)
+- **Compute:** Local machine via Docker + Docker Compose for now (cloud VM
+  hosting, e.g. Oracle Cloud Always Free, deferred until a public/always-on
+  deployment is actually needed — see `docs/decisions.md`)
 - **Orchestration:** Harbor + harbor-rewardkit
 - **Model routing:** LiteLLM, fronting free-tier providers (OpenRouter free models,
   Google Gemini free tier, Groq free tier) — swappable to Claude via one config
@@ -16,7 +18,7 @@ on free-tier infrastructure:
 
 ## Status
 
-🚧 Early setup — see `docs/decisions.md` for the running log.
+Phase 0 — LiteLLM config in progress. See `docs/decisions.md` for the running log.
 
 ## Structure
 
