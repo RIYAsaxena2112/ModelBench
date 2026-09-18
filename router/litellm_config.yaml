@@ -6,7 +6,7 @@ model_list:
 
   - model_name: gemini-flash
     litellm_params:
-      model: gemini/<check-ai.google.dev-for-current-free-model-id>
+      model: gemini/gemini-3.5-flash-lite
       api_key: os.environ/GEMINI_API_KEY
 
   - model_name: openrouter-free
