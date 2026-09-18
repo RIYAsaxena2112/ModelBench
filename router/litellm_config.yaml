@@ -1,3 +1,22 @@
+# model_list:
+#   - model_name: groq-fast
+#     litellm_params:
+#       model: groq/openai/gpt-oss-20b
+#       api_key: os.environ/GROQ_API_KEY
+
+#   - model_name: gemini-flash
+#     litellm_params:
+#       model: gemini/gemini-3.5-flash-lite
+#       api_key: os.environ/GEMINI_API_KEY
+
+#   - model_name: openrouter-gemma
+#     litellm_params:
+#       model: openrouter/google/gemma-4-31b-it:free  # check openrouter.ai/models?max_price=0
+#       api_key: os.environ/OPENROUTER_API_KEY
+
+# general_settings:
+#   master_key: os.environ/LITELLM_MASTER_KEY
+
 model_list:
   - model_name: groq-fast
     litellm_params:
@@ -9,10 +28,25 @@ model_list:
       model: gemini/gemini-3.5-flash-lite
       api_key: os.environ/GEMINI_API_KEY
 
-  - model_name: openrouter-free
+  - model_name: openrouter-arm
     litellm_params:
-      model: openrouter/<provider>/<model>:free   # check openrouter.ai/models?max_price=0
+      model: openrouter/google/gemma-4-31b-it:free
       api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: openrouter-arm
+    litellm_params:
+      model: openrouter/qwen/qwen3.8-27b:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: openrouter-arm
+    litellm_params:
+      model: openrouter/nvidia/nemotron-3-super-120b-a12b:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+router_settings:
+  num_retries: 2          # retry a failed deployment before failing over
+  allowed_fails: 1        # trip to the next deployment after 1 failure
+  cooldown_time: 30       # seconds before retrying a deployment that just failed
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
