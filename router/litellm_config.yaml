@@ -1,0 +1,18 @@
+model_list:
+  - model_name: groq-fast
+    litellm_params:
+      model: groq/openai/gpt-oss-20b
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: gemini-flash
+    litellm_params:
+      model: gemini/<check-ai.google.dev-for-current-free-model-id>
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: openrouter-free
+    litellm_params:
+      model: openrouter/<provider>/<model>:free   # check openrouter.ai/models?max_price=0
+      api_key: os.environ/OPENROUTER_API_KEY
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY

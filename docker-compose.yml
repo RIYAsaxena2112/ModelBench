@@ -1,0 +1,11 @@
+# docker-compose.yml (repo root)
+services:
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env                                    # loads your keys into the container's env
+    volumes:
+      - ./router/litellm_config.yaml:/app/config.yaml   # mounts your config into the container
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
