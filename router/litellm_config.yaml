@@ -48,5 +48,9 @@ router_settings:
   allowed_fails: 1        # trip to the next deployment after 1 failure
   cooldown_time: 30       # seconds before retrying a deployment that just failed
 
+litellm_settings:
+  drop_params: true
+  additional_drop_params: ["prompt_cache_key"]   # generic drop_params doesn't catch this on the /responses path
+
 general_settings:
-  master_key: os.environ/LITELLM_MASTER_KEY
+  master_key: os.environ/LITELLM_MASTER_KEY  
