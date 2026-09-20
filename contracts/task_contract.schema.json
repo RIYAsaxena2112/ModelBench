@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Contract",
+  "description": "Structural requirements every Harbor task.toml must satisfy, derived by comparing hello-world (Harbor's built-in example) against discount-bug-fix (this project's first authored task).",
+  "type": "object",
+  "required": ["schema_version", "task", "metadata", "verifier", "agent", "environment"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Both example tasks declared 1.4 — but see 'known_inconsistency' note below; matching versions did not guarantee matching shape."
+    },
+    "task": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" },
+        "keywords": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["difficulty", "category"],
+      "properties": {
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "category": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "verifier": {
+      "type": "object",
+      "required": ["timeout_sec"],
+      "properties": {
+        "timeout_sec": { "type": "number" }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "required": ["timeout_sec"],
+      "properties": {
+        "timeout_sec": { "type": "number" }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "required": ["build_timeout_sec"],
+      "properties": {
+        "build_timeout_sec": { "type": "number" }
+      }
+    }
+  },
+  "known_inconsistency": "Author info shape differs between example tasks: hello-world uses metadata.author_name/author_email; discount-bug-fix uses [[task.authors]] as an array of tables. Both claim schema_version 1.4. Not encoded as required here since it's not actually consistent in practice — worth resolving before writing a 3rd task, not before."
+}

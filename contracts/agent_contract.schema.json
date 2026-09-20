@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Contract",
+  "description": "What every pluggable agent takes in and must produce, enforced by Harbor. Confirmed empirically: result.json has identical top-level keys whether the agent was 'oracle' or 'mini-swe-agent' — what differs is only the values inside agent_result, not the shape.",
+  "input": {
+    "description": "A task spec (task.toml + instruction.md, per the task contract) plus a model handle (the -m flag string, e.g. 'openai/gemini-flash', per the model contract). The agent never receives provider-specific detail — only the LiteLLM alias.",
+    "type": "object",
+    "required": ["task_path", "model_handle"],
+    "properties": {
+      "task_path": { "type": "string" },
+      "model_handle": { "type": "string" }
+    }
+  },
+  "output": {
+    "description": "result.json — same top-level shape regardless of which agent ran, confirmed by diffing sorted keys from an oracle trial and a mini-swe-agent trial on the same task.",
+    "type": "object",
+    "required": [
+      "task_name", "trial_name", "config", "agent_info", "agent_result",
+      "verifier_result", "started_at", "finished_at"
+    ],
+    "properties": {
+      "task_name": { "type": "string" },
+      "trial_name": { "type": "string" },
+      "config": { "type": "object", "description": "Full trial configuration: task, agent, environment, verifier settings." },
+      "agent_info": {
+        "type": "object",
+        "required": ["name", "version"],
+        "properties": {
+          "name": { "type": "string", "description": "e.g. 'oracle', 'mini-swe-agent', 'opencode' — this is the pluggable part." },
+          "version": { "type": "string" }
+        }
+      },
+      "agent_result": {
+        "type": "object",
+        "description": "Content varies meaningfully by agent (oracle has near-zero token usage, a real model doesn't) but the field names themselves (n_input_tokens, n_output_tokens, cost_usd, model_usage) are present regardless.",
+        "properties": {
+          "n_input_tokens": { "type": "integer" },
+          "n_output_tokens": { "type": "integer" },
+          "cost_usd": { "type": ["number", "null"] }
+        }
+      },
+      "verifier_result": {
+        "type": "object",
+        "required": ["rewards"],
+        "properties": {
+          "rewards": { "type": "object", "description": "e.g. {\"reward\": 1.0} — the objective pass/fail score, independent of which agent produced it." }
+        }
+      },
+      "exception_info": {
+        "type": ["object", "null"],
+        "description": "Present and populated on failures (AgentTimeoutError, NonZeroAgentExitCodeError, etc.), null on clean success. Same field exists either way — its presence/absence, not its shape, signals success vs. failure."
+      },
+      "started_at": { "type": "string" },
+      "finished_at": { "type": "string" }
+    }
+  }
+}
