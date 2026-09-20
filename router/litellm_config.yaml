@@ -51,6 +51,7 @@ router_settings:
 litellm_settings:
   drop_params: true
   additional_drop_params: ["prompt_cache_key"]   # generic drop_params doesn't catch this on the /responses path
-
+  set_verbose: true
+  
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY  

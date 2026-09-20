@@ -9,6 +9,7 @@ storage/**
 !logs/agent/.gitkeep
 !logs/verifier/.gitkeep
 !storage/.gitkeep
+harbor/
 
 # python
 __pycache__/
